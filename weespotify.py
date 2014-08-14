@@ -41,6 +41,7 @@ except ImportError:
 
 def np_cb(data, buf, args):
     """Command "/np": display spotify artist - track"""
+    # TODO: fix unicode problems with Motörhead
     # TODO: add Dbus exception
     # TODO: add formatting options in settings :)
     bus = dbus.SessionBus()
