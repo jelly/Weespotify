@@ -24,7 +24,6 @@ SCRIPT_DESC = 'Show now playing information from spotify using dbus'
 SCRIPT_COMMAND = 'np'
 
 IMPORT_OK = True
-
 try:
     import weechat
 except ImportError:
@@ -41,16 +40,16 @@ except ImportError:
 
 def np_cb(data, buf, args):
     """Command "/np": display spotify artist - track"""
-    # TODO: fix unicode problems with Motörhead
     # TODO: add Dbus exception
     # TODO: add formatting options in settings :)
     bus = dbus.SessionBus()
     player = bus.get_object('com.spotify.qt', '/')
     iface = dbus.Interface(player, 'org.freedesktop.MediaPlayer2')
     info = iface.GetMetadata()
-    title = str(info['xesam:title'])
-    artist = str(info['xesam:artist'][0])
-    weechat.command(buf,"/me is listening to: %s - %s" % (artist, title))
+    title = info['xesam:title']
+    artist = info['xesam:artist'][0]
+
+    weechat.command(buf, ("/me is listening to: %s - %s" % (artist, title)).encode("utf-8"))
     return weechat.WEECHAT_RC_OK
 
 def main():
