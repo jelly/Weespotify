@@ -46,14 +46,14 @@ settings = {
 def np_cb(data, buf, args):
     """Command "/np": display spotify artist - track"""
 
-    bus = dbus.SessionBus()
-    player = bus.get_object('com.spotify.qt', '/')
-    iface = dbus.Interface(player, 'org.freedesktop.MediaPlayer2')
-    info = iface.GetMetadata()
-    title = info['xesam:title']
-    artist = info['xesam:artist'][0]
-    album = info['xesam:album']
-    url = info['xesam:url']
+    session_bus = dbus.SessionBus()
+    spotify_bus = session_bus.get_object("org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2")
+    spotify_properties = dbus.Interface(spotify_bus, "org.freedesktop.DBus.Properties")
+    metadata = spotify_properties.Get("org.mpris.MediaPlayer2.Player", "Metadata")
+    title = metadata['xesam:title']
+    artist = metadata['xesam:artist'][0]
+    album = metadata['xesam:album']
+    url = metadata['xesam:url']
 
     np = weechat.config_get_plugin('np_format').format(album=album.encode('utf-8'), title=title.encode('utf-8'), artist=artist.encode('utf-8'), spotifyurl=url.encode('utf-8'))
     weechat.command(buf, np)
