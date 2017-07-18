@@ -51,7 +51,10 @@ def np_cb(data, buf, args):
     album = metadata['xesam:album']
     url = metadata['xesam:url']
 
-    np = weechat.config_get_plugin('np_format').format(album=album.encode('utf-8'), title=title.encode('utf-8'), artist=artist.encode('utf-8'), spotifyurl=url.encode('utf-8'))
+    np = weechat.config_get_plugin('np_format').format(album=album.encode('utf-8'),
+                                                       title=title.encode('utf-8'),
+                                                       artist=artist.encode('utf-8'),
+                                                       spotifyurl=url.encode('utf-8'))
     weechat.command(buf, np)
     return weechat.WEECHAT_RC_OK
 
