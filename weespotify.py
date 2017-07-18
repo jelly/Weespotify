@@ -63,8 +63,8 @@ for option, (default_value, description) in settings.items():
     if description:
         weechat.config_set_desc_plugin(option, description)
 weechat.hook_command(SCRIPT_COMMAND,
-        SCRIPT_DESC,
-        '',
-        '',
-        '%(buffers_names)',
-        'np_cb', '')
+                     SCRIPT_DESC,
+                     '',
+                     '',
+                     '%(buffers_names)',
+                     'np_cb', '')
