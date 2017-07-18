@@ -31,7 +31,6 @@ except ImportError:
 
 try:
     import dbus
-    from dbus.exceptions import DBusException
 except ImportError:
     print('You need to have python-dbus installed')
 
