@@ -55,7 +55,7 @@ def np_cb(data, buf, args):
     weechat.command(buf, np)
     return weechat.WEECHAT_RC_OK
 
-weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC,'', '')
+weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC, '', '')
 
 for option, (default_value, description) in settings.items():
     if weechat.config_get_plugin(option) == "":
