@@ -23,20 +23,17 @@ SCRIPT_LICENSE = 'GPL3'
 SCRIPT_DESC = 'Show now playing information from spotify using dbus'
 SCRIPT_COMMAND = 'np'
 
-IMPORT_OK = True
 try:
     import weechat
 except ImportError:
     print('This script must be run under WeeChat.')
     print('Get WeeChat now at: http://www.weechat.org/')
-    IMPORT_OK = False
 
 try:
     import dbus
     from dbus.exceptions import DBusException
 except ImportError:
     print('You need to have python-dbus installed')
-    IMPORT_OK = False
 
 settings = {
         "np_format": ("/me is listening to: {album} - {track}", "Now playing format string options: {artist}, {title}, {album}, {spotifyurl}")
@@ -59,21 +56,16 @@ def np_cb(data, buf, args):
     weechat.command(buf, np)
     return weechat.WEECHAT_RC_OK
 
-def main():
-    """Main"""
-    if not weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC,'', ''):
-        return
-    for option, (default_value, description) in settings.items():
-        if weechat.config_get_plugin(option) == "":
-            weechat.config_set_plugin(option, default_value)
-        if description:
-            weechat.config_set_desc_plugin(option, description)
-    weechat.hook_command(SCRIPT_COMMAND,
-            SCRIPT_DESC,
-            '',
-            '',
-            '%(buffers_names)',
-            'np_cb', '')
+weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC,'', '')
 
-if __name__ == "__main__" and IMPORT_OK:
-    main()
+for option, (default_value, description) in settings.items():
+    if weechat.config_get_plugin(option) == "":
+        weechat.config_set_plugin(option, default_value)
+    if description:
+        weechat.config_set_desc_plugin(option, description)
+weechat.hook_command(SCRIPT_COMMAND,
+        SCRIPT_DESC,
+        '',
+        '',
+        '%(buffers_names)',
+        'np_cb', '')
